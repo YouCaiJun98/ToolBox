@@ -1,4 +1,5 @@
 import random
+import numpy as np
 
 # randomly crop a patch from image
 def crop_patch(im, pch_size):
@@ -73,10 +74,14 @@ def inverse_augmentation(image, mode):
         raise Exception('Invalid choice of image transformation')
     return out
 
-def image_show(x, title=None, cbar=False, figsize=None):
+def image_show(x, title=None, cbar=False, figsize=None,
+               converted_from_tensor=True, cmap=None):
     import matplotlib.pyplot as plt
     plt.figure(figsize=figsize)
-    plt.imshow(x, interpolation='nearest')#, cmap='gray')
+    if converted_from_tensor:
+        # in this case, x should be a np.ndarray
+        x = x.transpose((2, 1, 0))
+    plt.imshow(x, interpolation='nearest', cmap=cmap)
     if title:
         plt.title(title)
     if cbar:

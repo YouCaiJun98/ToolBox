@@ -14,6 +14,8 @@ def calc_PSNR(inputs:torch.Tensor, targets:torch.Tensor,
         https://github.com/photosynthesis-team/piq/blob/master/piq/psnr.py
     '''
     # Constant for numerical stability, could guarantee accuracy in .5f
+    assert inputs.shape == targets.shape, 'The shape of inputs is misaligned with that of outputs,' + \
+        'please check their shape.'
     eps = 1e-10
     inputs = torch.clamp(inputs, 0, float(data_range))
     inputs, targets = inputs/float(data_range), targets/float(data_range)
