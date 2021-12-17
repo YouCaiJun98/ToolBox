@@ -39,7 +39,8 @@ class BSD(Dataset):
             # train setting
             idx = random.randint(0, self.num_images - 1)
         if self.patch_size:
-            img =crop_patch(self.images[idx], self.patch_size)
+            img = crop_patch(self.images[idx], self.patch_size, gray=True) if self.gray \
+                else crop_patch(self.images[idx], self.patch_size, gray=False)
         else:
             img = self.images[idx]
 

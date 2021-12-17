@@ -1,4 +1,5 @@
 # PSNR calculating
+import torch
 from typing import Union
 def calc_PSNR(inputs:torch.Tensor, targets:torch.Tensor,
               data_range:Union[int, float]=1.0) -> float:
