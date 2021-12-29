@@ -103,10 +103,10 @@ class Raw_Base(data.Dataset):
             assert W-ps>0 and H-ps>0, "The patch size is larger than the current img."
             xx = np.random.randint(0, W-ps)
             yy = np.random.randint(0, H-ps)
-            if stage_in == stage_out: # raw2raw or rgb2rgb
+            if self.stage_in == self.stage_out: # raw2raw or rgb2rgb
                 input_img  = input_img[:, yy:yy + ps, xx:xx + ps]
                 target_img = target_img[:,yy:yy + ps, xx:xx + ps]
-            elif stage_in == 'raw' and stage_out == 'sRGB': # raw2rgb
+            elif self.stage_in == 'raw' and self.stage_out == 'sRGB': # raw2rgb
                 input_img  = input_img[:, yy:yy + ps, xx:xx + ps]
                 target_img = target_img[:, yy*2:(yy+ps)*2, xx*2:(xx+ps)*2]
         
@@ -122,8 +122,8 @@ class Raw_Base(data.Dataset):
                 target_img = np.transpose(target_img, (0, 2, 1))
 
         input_img  = np.maximum(np.minimum(input_img, 1.0), 0)
-        input_img  = torch.from_numpy(input_img).float()
-        target_img = torch.from_numpy(target_img).float()
+        input_img  = torch.from_numpy(np.ascontiguousarray(input_img)).float()
+        target_img = torch.from_numpy(np.ascontiguousarray(target_img)).float()
                     
         return input_img, target_img
 
@@ -154,7 +154,7 @@ class SID_Sony(Raw_Base):
                                im[G1[0][0]:H:2, G1[1][0]:W:2],
                                im[B [0][0]:H:2,  B[1][0]:W:2],
                                im[G2[0][0]:H:2, G2[1][0]:W:2]), axis=0)
-        packed_raw = np.max(packed_raw - black_level, 0) / (white_level - black_level)
+        packed_raw = (packed_raw - black_level) / (white_level - black_level)
         return np.clip(packed_raw, 0, 1)
 
 class SID_Fuji(Raw_Base):
