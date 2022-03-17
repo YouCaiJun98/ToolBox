@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/home/shixiangsheng/.ssh'
+let g:netrw_dirhist_2='/home/shixiangsheng/awnas'
+let g:netrw_dirhist_3='/home/shixiangsheng'
+let g:netrw_dirhist_4='/home/shixiangsheng/projects/bnnawnas/examples'
+let g:netrw_dirhist_5='/home/shixiangsheng/projects/bnnawnas/aw_nas/ops'
+let g:netrw_dirhist_6='/home/shixiangsheng/projects/bnnawnas/examples'

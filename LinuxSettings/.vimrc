@@ -63,6 +63,7 @@ endif
  
 set modeline      " 底部的模式行
 set cursorline    " 高亮光标所在行
+hi CursorLineNr    term=bold cterm=bold gui=bold
 " set cursorcolumn  " 高亮光标所在列
  
 set showmatch     " 高亮括号匹配
@@ -202,8 +203,11 @@ cmap w!! w !sudo tee > /dev/null %
 cmap W w
 cmap Q q
 cmap WQ wq
+cmap QW wq
+cmap qw wq 
 
 set hls
+
 
 inoremap ipdb<Leader> import ipdb; ipdb.set_trace()
 
