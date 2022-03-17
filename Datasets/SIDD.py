@@ -21,7 +21,7 @@ from natsort import natsorted
 from glob import glob
 class SIDD_sRGB_Train_DataLoader(Dataset):
     def __init__(self, path, length, patch_size, patched_input=False):
-        super(SIDD_Medium_sRGB_Train_DataLoader, self).__init__()
+        super(SIDD_sRGB_Train_DataLoader, self).__init__()
         assert length % 160 == 0, 'You should specify a proper length.'
 
         self.len            = length
