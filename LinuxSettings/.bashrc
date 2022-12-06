@@ -118,11 +118,15 @@ fi
 # More shortened ops
 alias nv="watch -n 0.002 -d nvidia-smi"
 alias deviceQuery="sudo /home/eva_share/opt/cuda-11.1/samples/1_Utilities/deviceQuery/deviceQuery"
+alias py="python"
+alias trtexec="/home/eva_share/opt/cuda-11.1/TensorRT-8.2.1.8/bin/trtexec"
+alias rmpycache="find ./ -name __pycache__ | xargs rm -rf"
 
 export PATH="/home/eva_share/opt/cuda-11.1/bin:/usr/local/nvidia/bin:$PATH"
 export CUDA_HOME="/home/eva_share/opt/cuda-11.1/"
-
-
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eva_share/opt/cuda-11.1/TensorRT-8.2.1.8/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eva_share/opt/cuda-11.1/targets/x86_64-linux/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eva_share/opt/cuda-11.1/lib64
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

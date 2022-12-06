@@ -39,7 +39,7 @@ class Raw_Base(data.Dataset):
         """
         :param root: dataset directory
         :param image_list_file: contains image file names under root
-        :param patch_size: if None, full images are returned, otherwise patches are returned. 
+        :param patch_size: if None, full images are returned, otherwise patches are returned.
                            should note that the target patch is cropped AFTER packing.
         :param stage_in:  type of input images for the model. should be raw or sRGB.
         :param stage_out: type of target images for the model. should be raw or sRGB.
@@ -68,7 +68,6 @@ class Raw_Base(data.Dataset):
         When sRGB images are needed, we just adopt the process procedure of Rawpy,
         There are more complicated ISP - https://github.com/Vandermode/ELD/blob/master/util/process.py
         """
-        # import ipdb; ipdb.set_trace()
         info = self.img_info[index]
         input_file, target_file = info['input'], info['target']
         # input image
@@ -83,7 +82,8 @@ class Raw_Base(data.Dataset):
             input_img = np.transpose(np.float32(im / 65535.), (2, 0, 1))
 
         # target image
-        target_raw = rawpy.imread(os.path.join(self.root, target_file))
+        if not self.gt_png:
+            target_raw = rawpy.imread(os.path.join(self.root, target_file))
         # raw target
         if self.stage_out == 'raw':
             # Note that we pack the output raw images for simple calculation.
@@ -92,7 +92,7 @@ class Raw_Base(data.Dataset):
         elif self.stage_out == 'sRGB':
             if self.gt_png:
                 target_img = np.array(Image.open(os.path.join(self.root, target_file)), dtype=np.float32)
-                target_img /= 255.
+                target_img = np.transpose((target_img / 255.), (2, 0, 1))
             else:
                 im = target_raw.postprocess(use_camera_wb=True, half_size=False, no_auto_bright=True, output_bps=16)
                 target_img = np.transpose(np.float32(im / 65535.), (2, 0, 1))
@@ -109,7 +109,7 @@ class Raw_Base(data.Dataset):
             elif self.stage_in == 'raw' and self.stage_out == 'sRGB': # raw2rgb
                 input_img  = input_img[:, yy:yy + ps, xx:xx + ps]
                 target_img = target_img[:, yy*2:(yy+ps)*2, xx*2:(xx+ps)*2]
-        
+
         if self.data_aug:
             if np.random.randint(2, size=1)[0] == 1:  # random flip
                 input_img  = np.flip(input_img, axis=1) # H
@@ -124,18 +124,18 @@ class Raw_Base(data.Dataset):
         input_img  = np.maximum(np.minimum(input_img, 1.0), 0)
         input_img  = torch.from_numpy(np.ascontiguousarray(input_img)).float()
         target_img = torch.from_numpy(np.ascontiguousarray(target_img)).float()
-                    
+
         return input_img, target_img
 
     def __len__(self):
         return len(self.img_info)
 
 class SID_Sony(Raw_Base):
-    def __init__(self, root, image_list_file, patch_size=None, stage_in='raw', 
+    def __init__(self, root, image_list_file, patch_size=None, stage_in='raw',
                  stage_out='raw', data_aug=True, gt_png=False):
-        super(SID_Sony, self).__init__(root, image_list_file, patch_size=patch_size, stage_in=stage_in, 
+        super(SID_Sony, self).__init__(root, image_list_file, patch_size=patch_size, stage_in=stage_in,
                                        stage_out=stage_out, data_aug=data_aug, gt_png=gt_png)
-        
+
     def pack_raw(self, raw):
         # pack Bayer image to 4 channels
         im = raw.raw_image_visible.astype(np.float32)
@@ -147,7 +147,7 @@ class SID_Sony(Raw_Base):
         W = img_shape[1]
         ch_idx = lambda x: np.where(raw_pattern == x)
         R, G1, B, G2 = ch_idx(0), ch_idx(1), ch_idx(2), ch_idx(3)
-        
+
         # Through this method, different Bayer Patterns could be packed as the same
         # order.
         packed_raw = np.stack((im[R [0][0]:H:2,  R[1][0]:W:2],
@@ -157,12 +157,21 @@ class SID_Sony(Raw_Base):
         packed_raw = (packed_raw - black_level) / (white_level - black_level)
         return np.clip(packed_raw, 0, 1)
 
+class SID_Sony_patched(SID_Sony):
+    def __init__(self, root, image_list_file, patch_size=None, stage_in='raw',
+                 stage_out='raw', data_aug=True, gt_png=False):
+        super(SID_Sony, self).__init__(root, image_list_file, patch_size=patch_size, stage_in=stage_in,
+                                       stage_out=stage_out, data_aug=data_aug, gt_png=gt_png)
+
+
+
+
 class SID_Fuji(Raw_Base):
-    def __init__(self, root, image_list_file, patch_size=None, stage_in='raw', 
+    def __init__(self, root, image_list_file, patch_size=None, stage_in='raw',
                  stage_out='raw', data_aug=True, gt_png=False):
         super(SID_Fuji, self).__init__(root, image_list_file, patch_size=patch_size, stage_in=stage_in, 
                                        stage_out=stage_out, data_aug=data_aug, gt_png=gt_png)
-        
+
     def pack_raw(self, raw):
         # pack X-Trans image to 9 channels
         # the process below comes from https://github.com/cydonia999/Learning_to_See_in_the_Dark_PyTorch/blob/master/datasets/raw_images.py

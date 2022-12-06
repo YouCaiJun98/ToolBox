@@ -55,7 +55,7 @@ class SIDD_sRGB_Train_DataLoader(Dataset):
         # read image
         noisy_img   = np.array(Image.open(self.noisy_imgs[index]))
         clean_img   = np.array(Image.open(self.clean_imgs[index]))
-        
+
         # random crop
         if self.patch_size:
             noisy_patch, clean_patch = crop_patches(noisy_img, clean_img,
@@ -93,12 +93,13 @@ class SIDD_sRGB_Val_DataLoader(Dataset):
         noisy_patch = np.array(Image.open(self.noisy_imgs[index]))
         clean_patch = np.array(Image.open(self.clean_imgs[index]))
 
+        noisy_patch, clean_patch = self.transform(noisy_patch), \
+                                   self.transform(clean_patch)
+
         if self.patch_size:
             noisy_patch = F.center_crop(noisy_patch, (self.patch_size, self.patch_size))
             clean_patch = F.center_crop(clean_patch, (self.patch_size, self.patch_size))
 
-        noisy_patch, clean_patch = self.transform(noisy_patch), \
-                                   self.transform(clean_patch)
         filename = os.path.splitext(os.path.split(self.clean_imgs[index])[-1])[0]
 
         if self.return_name:

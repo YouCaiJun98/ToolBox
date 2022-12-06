@@ -119,8 +119,8 @@ fi
 alias nv="watch -n 0.002 -d nvidia-smi"
 alias deviceQuery="sudo /home/eva_share/opt/cuda-11.1/samples/1_Utilities/deviceQuery/deviceQuery"
 
-export PATH="/opt/cuda-11.1/bin:/usr/local/nvidia/bin:$PATH"
-export CUDA_HOME="/opt/cuda-11.1/"
+export PATH="/home/eva_share/opt/cuda-11.1/bin:/usr/local/nvidia/bin:$PATH"
+export CUDA_HOME="/home/eva_share/opt/cuda-11.1/"
 
 
 
