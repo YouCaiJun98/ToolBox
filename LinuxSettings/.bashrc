@@ -128,6 +128,11 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eva_share/opt/cuda-11.1/TensorRT-8
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eva_share/opt/cuda-11.1/targets/x86_64-linux/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eva_share/opt/cuda-11.1/lib64
 
+# set proxy
+export http_proxy="http://127.0.0.1:7890"
+export https_proxy="http://127.0.0.1:7890"
+export all_proxy="socks5://127.0.0.1:7890"
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/shixiangsheng/nfs/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
