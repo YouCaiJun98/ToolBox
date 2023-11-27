@@ -9,6 +9,10 @@
 * add alias to ~/.bashrc:
   * cp lines in `.bashrc` & do `source ~/.bashrc`
 * set up vim:
+  * git clone plugin manager:
+  '''bash
+  git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  '''
   * install independences
 
    '''bash
