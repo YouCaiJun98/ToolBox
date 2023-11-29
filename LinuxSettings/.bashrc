@@ -128,10 +128,17 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eva_share/opt/cuda-11.1/TensorRT-8
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eva_share/opt/cuda-11.1/targets/x86_64-linux/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eva_share/opt/cuda-11.1/lib64
 
-# set proxy
-export http_proxy="http://127.0.0.1:7890"
-export https_proxy="http://127.0.0.1:7890"
-export all_proxy="socks5://127.0.0.1:7890"
+# proxy related config
+local_proxy_port=7890
+export http_proxy="http://127.0.0.1:$local_proxy_port"
+export https_proxy="http://127.0.0.1:$local_proxy_port"
+export all_proxy="socks5://127.0.0.1:$local_proxy_port"
+
+alias setproxy="export http_proxy=\"http://127.0.0.1:$local_proxy_port\" \
+             && export https_proxy=\"http://127.0.0.1:$local_proxy_port\" \
+			 && export all_proxy=\"socks5://127.0.0.1:$local_proxy_port\""
+alias unsetproxy="unset http_proxy && unset https_proxy && unset all_proxy"
+
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
