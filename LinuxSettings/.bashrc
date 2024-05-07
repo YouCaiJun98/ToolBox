@@ -129,7 +129,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eva_share/opt/cuda-11.1/targets/x8
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eva_share/opt/cuda-11.1/lib64
 
 # proxy related config
-local_proxy_port=7890
+local_proxy_port=10808
 export http_proxy="http://127.0.0.1:$local_proxy_port"
 export https_proxy="http://127.0.0.1:$local_proxy_port"
 export all_proxy="socks5://127.0.0.1:$local_proxy_port"

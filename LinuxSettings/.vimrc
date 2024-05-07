@@ -218,3 +218,6 @@ set pastetoggle=<F12>
 
 set list
 set listchars=tab:>-
+
+" disable F1 -> help.txt
+nmap <F1> <nop>
