@@ -221,3 +221,6 @@ set listchars=tab:>-
 
 " disable F1 -> help.txt
 nmap <F1> <nop>
+" remap the key that moves the cursor to the first 
+" non-blank character.
+nnoremap ` ^
