@@ -224,3 +224,8 @@ nmap <F1> <nop>
 " remap the key that moves the cursor to the first 
 " non-blank character.
 nnoremap ` ^
+
+
+" ClangFormat related
+" set alias for :ClangFormat command
+autocmd VimEnter * command! -range=% -nargs=0 CF call clang_format#replace(<line1>, <line2>)

@@ -31,3 +31,11 @@
     '''bash
     ~/.vim/bundle/molokai/colors/molokai.vim:line 132:none -> NONE
     '''
+  
+  * setup clang-format for C++:
+    * git clone this repository
+    '''bash
+    git clone git@github.com:rhysd/vim-clang-format.git
+    '''
+    * Copy `plugin`, `doc` and `autoload` directories into your `~/.vim`  
+    * change the command `:ClangFormat` to `:CF`, which is already done in the `~/.vimrc` file.
