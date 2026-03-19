@@ -10,12 +10,14 @@
   * cp lines in `.bashrc` & do `source ~/.bashrc`
 * set up vim:
   * git clone plugin manager:
-  '''bash
+  
+  ```bash
   git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  '''
+  ```
+  
   * install independences
-
-   '''bash
+   
+   ```bash
     sudo apt-get install silversearcher-ag ctags
     sudo apt-get install gcc g++ cmake
     sudo apt-get install libncurses5-dev # 插件需要的软件包
@@ -23,19 +25,27 @@
     tar xf global-6.4.tar.gz
     cd global-6.4
     ./configure && make && sudo make install
-   '''
+   ```
+
+  * if the upper commands fails, directly install `global` from ubuntu
+  
+  ```bash
+  sudo apt-get install -y global
+  ```
+  
   * cp `.vimrc` to `~/`
   * open `~/.vimrc` and conduct `: PluginInstall` to install the plugins
   * fix some bug:
 
-    '''bash
+    ```bash
     ~/.vim/bundle/molokai/colors/molokai.vim:line 132:none -> NONE
-    '''
+    ```
   
   * setup clang-format for C++:
     * git clone this repository
-    '''bash
+    
+    ```bash
     git clone git@github.com:rhysd/vim-clang-format.git
-    '''
+    ```
     * Copy `plugin`, `doc` and `autoload` directories into your `~/.vim`  
     * change the command `:ClangFormat` to `:CF`, which is already done in the `~/.vimrc` file.

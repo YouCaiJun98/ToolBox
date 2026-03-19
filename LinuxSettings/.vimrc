@@ -44,7 +44,10 @@ set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 set smartindent
- 
+
+" === C++ / CUDA 缩进：Tab = 4个空格 ===
+autocmd FileType cpp,cuda setlocal ts=4 sw=4 sts=4 et
+
 if has("autocmd")  " 打开时光标放在上次退出时的位置
     autocmd BufReadPost *
         \ if line("'\"") > 0 && line ("'\"") <= line("$") |

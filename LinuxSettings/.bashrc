@@ -117,17 +117,17 @@ fi
 
 # More shortened ops
 alias nv="watch -n 0.002 -d nvidia-smi"
-alias deviceQuery="sudo /home/eva_share/opt/cuda-11.1/samples/1_Utilities/deviceQuery/deviceQuery"
 alias py="python"
-alias trtexec="/home/eva_share/opt/cuda-11.1/TensorRT-8.2.1.8/bin/trtexec"
 alias rmpycache="find ./ -name __pycache__ | xargs rm -rf"
+alias nsys=/opt/nvidia/nsight-systems-cli/2026.1.2/target-linux-x64/nsys
+alias ncu=/usr/local/NVIDIA-Nsight-Compute/ncu
 
-export PATH="/home/eva_share/opt/cuda-11.1/bin:/usr/local/nvidia/bin:$PATH"
-export CUDA_HOME="/home/eva_share/opt/cuda-11.1/"
+export PATH="/share/public-local/opt/cuda-11.1/bin:/usr/local/nvidia/bin:$PATH"
+export CUDA_HOME="/share/public-local/opt/cuda-11.1"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eva_share/opt/cuda-11.1/TensorRT-8.2.1.8/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eva_share/opt/cuda-11.1/targets/x86_64-linux/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eva_share/opt/cuda-11.1/lib64
-
+export HF_ENDPOINT=https://hf-mirror.com
 # proxy related config
 local_proxy_port=10808
 export http_proxy="http://127.0.0.1:$local_proxy_port"
@@ -140,18 +140,25 @@ alias setproxy="export http_proxy=\"http://127.0.0.1:$local_proxy_port\" \
 alias unsetproxy="unset http_proxy && unset https_proxy && unset all_proxy"
 
 
+
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/shixiangsheng/nfs/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/shixiangsheng/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/shixiangsheng/nfs/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/shixiangsheng/nfs/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/shixiangsheng/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/shixiangsheng/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/shixiangsheng/nfs/miniconda3/bin:$PATH"
+        export PATH="/home/shixiangsheng/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+. "$HOME/.local/bin/env"
+# >>> xmake >>>
+test -f "/home/shixiangsheng/.xmake/profile" && source "/home/shixiangsheng/.xmake/profile"
+# <<< xmake <<<
