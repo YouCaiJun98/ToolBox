@@ -47,6 +47,8 @@ set smartindent
 
 " === C++ / CUDA 缩进：Tab = 4个空格 ===
 autocmd FileType cpp,cuda setlocal ts=4 sw=4 sts=4 et
+" Markdown 文件：Tab = 4个空格
+autocmd FileType markdown setlocal ts=4 sw=4 sts=4 et
 
 if has("autocmd")  " 打开时光标放在上次退出时的位置
     autocmd BufReadPost *
